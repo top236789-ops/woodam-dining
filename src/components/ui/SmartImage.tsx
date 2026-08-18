@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import type { SiteImage } from "@/data/images";
+import { isRemoteImage, unsplashLoader } from "@/lib/imageLoader";
 import { cn } from "@/lib/cn";
 
 type SmartImageProps = {
@@ -38,6 +39,8 @@ export function SmartImage({
   fit = "cover",
 }: SmartImageProps) {
   const [failed, setFailed] = useState(false);
+  // 외부 임시 이미지는 원본 CDN이 리사이즈하고, 로컬 이미지는 Next.js가 최적화합니다.
+  const loader = isRemoteImage(image.src) ? unsplashLoader : undefined;
 
   return (
     <div
@@ -60,6 +63,7 @@ export function SmartImage({
         <Image
           src={image.src}
           alt={image.alt}
+          loader={loader}
           fill
           sizes={sizes}
           quality={quality}

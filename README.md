@@ -237,6 +237,11 @@ hero: {
 
 3. 모든 이미지를 로컬 파일로 교체했다면 `next.config.ts` 의 `images.remotePatterns` 항목을 삭제해도 됩니다.
 
+> **이미지 최적화 동작 방식**
+> 외부(Unsplash) 임시 이미지는 `src/lib/imageLoader.ts` 의 커스텀 로더를 통해 **Unsplash CDN이 직접 리사이즈**합니다.
+> 원본이 2~3MB로 커서 서버에서 다시 최적화할 필요가 없고, Vercel 이미지 최적화 사용량도 소모하지 않습니다.
+> `src` 를 `/images/...` 로컬 경로로 바꾸면 자동으로 **Next.js 기본 이미지 최적화**를 사용합니다. (`SmartImage` 가 판별)
+
 **권장 사항**
 
 - `width` / `height` 는 **실제 픽셀 크기**를 입력해야 레이아웃 이동(CLS)이 발생하지 않습니다.
